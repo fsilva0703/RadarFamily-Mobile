@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+	xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="RadarFamilyCore.LongRunningPage"
+	Title="Long Running"
+    BackgroundColor="Purple">
+
+	<ContentPage.Padding>
+		<OnPlatform x:TypeArguments="Thickness" iOS="5, 20, 5, 5" Android="5, 20, 5, 5" />
+	</ContentPage.Padding>
+
+	<ContentPage.Content>
+        <StackLayout>
+			<StackLayout>
+				<Button Text="Iniciar Rastreamento" x:Name="longRunningTask" />
+				<Button Text="Parar rastreamento" x:Name="stopLongRunningTask" />
+				<Label Text="" x:Name="ticker" TextColor="White" FontSize="Large" HorizontalOptions="CenterAndExpand"  />
+			</StackLayout>
+
+			<StackLayout Margin="10">
+				<Label x:Name="lblCronometro" Text="00:00:00"
+						   Font="50"
+						   HorizontalOptions="Center"
+						   VerticalOptions="Center"
+						   FontAttributes="Bold"
+						   TextColor="White">
+				</Label>
+			</StackLayout>
+
+            <StackLayout Margin="30">
+                <Label x:Name="lblStatusInternet"
+						   Font="15"
+						   HorizontalOptions="Center"
+						   VerticalOptions="Center"
+						   FontAttributes="Bold"
+						   TextColor="White">
+                </Label>
+                <Label x:Name="lblSemInternet"
+						   Font="10"
+						   HorizontalOptions="Center"
+						   VerticalOptions="Center"
+						   FontAttributes="Bold"
+						   TextColor="White">
+                </Label>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

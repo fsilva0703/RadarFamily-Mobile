@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="RadarFamilyCore.View.TrackingPage"
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+             BackgroundColor="White">
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <maps:Map x:Name="MyMap" MapType="Street" HasZoomEnabled="True" HeightRequest="400">
+                    <maps:Map.ItemTemplate>
+                        <DataTemplate>
+                            <maps:Pin Position="{Binding Position}"
+                                  Address="{Binding Address}"
+                                  Label="{Binding Name}"
+                                  Icon="{Binding Avatar}"   />
+                        </DataTemplate>
+                    </maps:Map.ItemTemplate>
+                </maps:Map>
+            </Grid>
+
+            <ActivityIndicator x:Name="waitActivityIndicator"
+                                       HorizontalOptions="CenterAndExpand"
+                                       VerticalOptions="CenterAndExpand"
+                                       Color="MediumPurple"  IsVisible="False">
+            </ActivityIndicator>
+
+            <ListView x:Name="lvPosition" SeparatorColor="Black" SeparatorVisibility="Default" RowHeight="100" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <!--<Image Source="{Binding urlFile}" HorizontalOptions="Start" HeightRequest="60" WidthRequest="60" />-->
+                                <StackLayout Orientation="Vertical" Padding="10,5,5,10" HorizontalOptions="Start">
+                                    <Label Text = "{Binding Name}" TextColor="Black" Font="10" HorizontalTextAlignment="Start" FontAttributes="Bold" />
+                                    <Label Text = "{Binding DateEvent}" TextColor="Black" FontSize="10" HorizontalTextAlignment="Start" />
+                                    <Label Text = "{Binding Address}" TextColor="Blue" TextDecorations="Underline" Font="12" FontAttributes="Bold" HorizontalTextAlignment="Start" TextType="Html">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="{Binding LatLong}" Tapped="OnTappedTitulo"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <!--<Label Text = "{Binding subtitulo}" Font="12" HorizontalTextAlignment="Start" MaxLines="3" />-->
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

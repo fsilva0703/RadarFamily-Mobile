@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="RadarFamilyCore.LoginPage"
+             NavigationPage.HasBackButton="True"
+             Title="Login - Radar Family"
+             BackgroundColor="MediumPurple"
+             >
+    
+    <Frame CornerRadius="10" 
+           HorizontalOptions="CenterAndExpand" 
+           VerticalOptions="Start"
+           HasShadow="True"
+           IsClippedToBounds="True"
+           OutlineColor="MediumPurple" 
+           Padding="35"
+           BackgroundColor="White"
+           Margin="10">
+
+        <StackLayout HorizontalOptions="CenterAndExpand">
+            <StackLayout Margin="5">
+                <Image Source="logo_new.jpg" WidthRequest="150" HeightRequest="150"/>
+            </StackLayout>
+
+            <StackLayout Margin="5">
+               
+                <Label Text="Digite o seu login e senha para Acessar" Font="12" FontFamily="Tahoma" VerticalTextAlignment="Start" HorizontalTextAlignment="Center">
+                </Label>
+            </StackLayout>
+
+            <Frame  CornerRadius="5" 
+                    HasShadow="True"
+                    IsClippedToBounds="True"
+                    OutlineColor="Gray" 
+                    Padding="5"
+                    WidthRequest="300">
+                <Entry x:Name="txtLogin"
+                           Placeholder="Entre com seu login"
+                           FontSize="Small"
+                           Keyboard="Email"
+                           VerticalOptions="Center"
+                           HorizontalOptions="FillAndExpand"
+                           TextColor="Black">
+                </Entry>
+            </Frame>
+
+            <Frame  CornerRadius="5" 
+                    HorizontalOptions="Center" 
+                    VerticalOptions="Start"
+                    HasShadow="True"
+                    IsClippedToBounds="True"
+                    OutlineColor="Gray" 
+                    Padding="0,5,5,5"
+                     WidthRequest="300">
+                <Entry x:Name="txtSenha"
+                           Placeholder="Entre com sua senha"
+                           FontSize="Small"
+                           IsPassword="True"
+                           VerticalOptions="Center"
+                           HorizontalOptions="FillAndExpand"
+                           TextColor="Black">
+                </Entry>
+            </Frame>
+
+            <StackLayout Orientation="Horizontal">
+
+                <Label Text="Lembrar-me" Font="18"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Center">
+                </Label>
+                <Switch x:Name="lembrarmeSwitch"
+                             HorizontalOptions="End"
+                             VerticalOptions="Center" Toggled="OnToggled">
+                </Switch>
+
+            </StackLayout>
+
+            <ActivityIndicator x:Name="waitActivityIndicator"
+                                       HorizontalOptions="CenterAndExpand"
+                                       VerticalOptions="CenterAndExpand"
+                               Color="MediumPurple">
+            </ActivityIndicator>
+
+            <Frame  CornerRadius="30" 
+                    HasShadow="True"
+                    IsClippedToBounds="True"
+                    OutlineColor="Gray" 
+                    Padding="0,0,0,0"
+                     WidthRequest="300" HorizontalOptions="CenterAndExpand">
+
+                <Button x:Name="loginButton"
+                        BackgroundColor="MediumPurple"
+                        Text="Entrar"
+                        TextColor="White"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center">
+                </Button>
+            </Frame>
+
+
+        </StackLayout>
+
+
+    </Frame>
+</ContentPage>

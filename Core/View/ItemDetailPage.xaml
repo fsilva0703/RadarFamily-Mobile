@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="RadarFamilyCore.View.ItemDetailPage"
+             Title="{Binding Title}">
+    <StackLayout>
+        <StackLayout Padding="5,10,0,0">
+            <Label Text="Nome:"  />
+            <Entry Text="{Binding Item.Name}" x:Name="txtName" FontSize="Small" />
+            
+            <Label Text="Login:" />
+            <Entry Text="{Binding Item.Login}" x:Name="txtLogin" FontSize="Small"/>
+            
+            <Label Text="Tolerância p/ posição (metros):" />
+            <Label Text="(Mínimo 30 metros)" FontSize="Micro" />
+            
+            <Grid WidthRequest="600">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="310"></ColumnDefinition>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Slider Maximum="1000"
+                        Minimum="30"
+                        Value="{Binding Item.CalculoDistancia}" MinimumTrackColor="Purple" MaximumTrackColor="Purple" ThumbColor="MediumPurple"
+                        ValueChanged="OnSliderValueChanged" Grid.Row="0" Grid.Column="0" WidthRequest="500"/>
+                    <Label x:Name="lblCalculoDistancia"
+                   Text="{Binding Item.CalculoDistancia}" Grid.Row="0" Grid.Column="1" FontSize="Subtitle"/>
+            </Grid>
+            
+
+            <Label Text="Intervalo de transmissão em movimento (minutos):" />
+            <Label Text="(Mínimo 1 minuto)" FontSize="Micro" />
+
+            <Grid WidthRequest="600">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="310"></ColumnDefinition>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Slider 
+                    Maximum="600"
+                    Minimum="1"
+                    Value="{Binding Item.IntervaloPosicao}" MinimumTrackColor="Purple" MaximumTrackColor="Purple" ThumbColor="MediumPurple"
+                    ValueChanged="OnSlider1ValueChanged" Grid.Row="0" Grid.Column="0" WidthRequest="500"/>
+                <Label x:Name="lblIntervaloPosicao"
+                   Text="{Binding Item.IntervaloPosicao}" Grid.Row="0" Grid.Column="1" FontSize="Subtitle"/>
+            </Grid>
+            
+            <Label Text="Intervalo de transmissão parado (minutos):" />
+            <Label Text="(Mínimo 30 minutos)" FontSize="Micro" />
+
+            <Grid WidthRequest="600">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="310"></ColumnDefinition>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+
+                <Slider 
+                    Maximum="600"
+                    Minimum="30"
+                    VerticalOptions="FillAndExpand"
+                    Value="{Binding Item.IntervaloPosicaoParado}" MinimumTrackColor="Purple" MaximumTrackColor="Purple" ThumbColor="MediumPurple"
+                    ValueChanged="OnSlider2ValueChanged" Grid.Row="0" Grid.Column="0" WidthRequest="500"/>
+                <Label x:Name="lblIntervaloPosicaoParado"
+                   Text="{Binding Item.IntervaloPosicaoParado}" Grid.Row="0" Grid.Column="1" FontSize="Subtitle"/>
+
+            </Grid>
+
+
+            <Label Text="Criado em:" />
+            <Label Text="{Binding Item.CreatedDate}" FontSize="Small"/>
+
+            <ActivityIndicator x:Name="waitActivityIndicator"
+                                       HorizontalOptions="CenterAndExpand"
+                                       VerticalOptions="CenterAndExpand"
+                               Color="MediumPurple">
+            </ActivityIndicator>
+
+            <Frame  CornerRadius="30" 
+                    HasShadow="True"
+                    IsClippedToBounds="True"
+                    OutlineColor="Gray" 
+                    Padding="0,0,0,0"
+                     WidthRequest="300" HorizontalOptions="CenterAndExpand">
+
+                <Button x:Name="saveButton"
+                        BackgroundColor="MediumPurple"
+                        Text="salvar"
+                        TextColor="White"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center">
+                </Button>
+            </Frame>
+
+        </StackLayout>
+
+        
+
+    </StackLayout>
+
+</ContentPage>
