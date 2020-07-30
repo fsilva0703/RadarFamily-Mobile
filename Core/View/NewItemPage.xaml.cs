@@ -62,6 +62,13 @@ namespace RadarFamilyCore.View
                 return;
             }
 
+            if (String.IsNullOrEmpty(txtSenha.Text))
+            {
+                await DisplayAlert("Atenção", "Digite uma senha válida!", "Entendi");
+                txtSenha.Focus();
+                return;
+            }
+
             ValidaEmail validEmail = new ValidaEmail();
 
             if (!validEmail.IsValidEmail(txtLogin.Text))
@@ -91,6 +98,7 @@ namespace RadarFamilyCore.View
                     {
                         Name = txtName.Text,
                         Login = txtLogin.Text,
+                        Password = txtSenha.Text,
                         CalculoDistancia = Convert.ToInt32(lblCalculoDistancia.Text),
                         IntervaloPosicao = Convert.ToInt32(lblIntervaloPosicao.Text),
                         IntervaloPosicaoParado = Convert.ToInt32(lblIntervaloPosicaoParado.Text),
@@ -102,7 +110,7 @@ namespace RadarFamilyCore.View
                     var jsonRequest = JsonConvert.SerializeObject(unitTrackerRequest);
                     var httpContent = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
 
-                    string uri = "http://radarfamily.somee.com/RadarFamily/admin/UnitTracker/Insert";
+                    string uri = "http://207.180.246.227:8095/admin/UnitTracker/Insert";
 
                     var retorno = await client.PostAsync(uri, httpContent);
 

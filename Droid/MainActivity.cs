@@ -9,13 +9,14 @@ using Android.Runtime;
 using Android;
 using RadarFamily.Droid;
 using Android.Views;
-using Android.Widget;
-using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.GoogleMaps.Android;
+using Com.OneSignal;
+using FFImageLoading.Forms.Platform;
+using Com.OneSignal.Abstractions;
 
 namespace RadarFamilyCore.Droid
 {
-	[Activity (Label = "RadarFamily", Icon = "@drawable/icone", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+	[Activity (Label = "RadarFamily", MainLauncher = true, Icon = "@drawable/icone", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
 	{
 		protected override void OnCreate (Bundle savedInstanceState)
@@ -53,6 +54,10 @@ namespace RadarFamilyCore.Droid
 				});
 				alert.Show();
 			}
+
+			CachedImageRenderer.Init(enableFastRenderer: true);
+
+			OneSignal.Current.StartInit("a3cd15a8-3fde-435d-b210-cb771ba6007b").EndInit();
 
 			LoadApplication(new App());
 

@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using System;
 using RadarFamilyCore.Messages;
 using Xamarin.Forms.Platform.iOS;
+using FFImageLoading.Forms.Platform;
 
 namespace RadarFamilyCore.iOS
 {
@@ -35,16 +36,19 @@ namespace RadarFamilyCore.iOS
 			Forms.Init ();
 			Xamarin.FormsGoogleMaps.Init("AIzaSyDPxQFP4WSIpMLk_610YoYwxa09i9Xx89c");
 
+			CachedImageRenderer.Init();
+
 			LoadApplication (new App ());
 
-			UIView statusBar = UIApplication.SharedApplication.ValueForKey(new NSString("statusBar")) as UIView; 
-			if (statusBar != null && statusBar.RespondsToSelector(new ObjCRuntime.Selector("setBackgroundColor:")))
-			{
-				statusBar.BackgroundColor = Color.FromHex("#9370DB").ToUIColor(); // change to your desired color 
-			}
+			UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, false);
+			UIApplication.SharedApplication.SetStatusBarHidden(false, false);
+
+			UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes { TextColor = UIColor.White });
 
 			WireUpLongRunningTask ();
 			WireUpDownloadTask ();
+
+			//OneSignal.Current.StartInit("f8ccd775-3a9c-47a4-aed0-58581056c335").EndInit();
 
 			return base.FinishedLaunching (app, options);
 		}

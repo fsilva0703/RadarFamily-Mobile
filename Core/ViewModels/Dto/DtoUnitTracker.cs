@@ -11,6 +11,7 @@ namespace RadarFamilyCore.ViewModels.Dto
         public Int32 IdUser { get; set; }
         public String Name { get; set; }
         public String Login { get; set; }
+        public String Password { get; set; }
         public Int32 CalculoDistancia { get; set; }
         public DateTime CreatedDate { get; set; }
         public Int32 IntervaloPosicao { get; set; }

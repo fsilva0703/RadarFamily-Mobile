@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "269715457814",
+    "firebase_url": "https://radarfamily-a8a78.firebaseio.com",
+    "project_id": "radarfamily-a8a78",
+    "storage_bucket": "radarfamily-a8a78.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:269715457814:android:d8663ab5ea00fc86db3237",
+        "android_client_info": {
+          "package_name": "com.fabiodepaula.RadarFamilyCore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "269715457814-19v14ova3m3b94hr5thkamdi279vr0td.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA96TjhS3JXyNHiUUL0YyiQAs96MFshgNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "269715457814-19v14ova3m3b94hr5thkamdi279vr0td.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

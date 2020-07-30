@@ -5,69 +5,111 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="RadarFamilyCore.LoginPage"
+             xmlns:translator="clr-namespace:RadarFamilyCore.Helpers"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
              NavigationPage.HasBackButton="True"
              Title="Login - Radar Family"
              BackgroundColor="MediumPurple"
              >
-    
-    <Frame CornerRadius="10" 
-           HorizontalOptions="CenterAndExpand" 
-           VerticalOptions="Start"
+
+    <Frame HorizontalOptions="CenterAndExpand" 
+           VerticalOptions="Fill"
            HasShadow="True"
            IsClippedToBounds="True"
            OutlineColor="MediumPurple" 
            Padding="35"
            BackgroundColor="White"
-           Margin="10">
+           Margin="5">
 
         <StackLayout HorizontalOptions="CenterAndExpand">
             <StackLayout Margin="5">
-                <Image Source="logo_new.jpg" WidthRequest="150" HeightRequest="150"/>
+                <Image Source="logo_new.jpg" WidthRequest="150" HeightRequest="150">
+                </Image>
+
             </StackLayout>
 
             <StackLayout Margin="5">
-               
-                <Label Text="Digite o seu login e senha para Acessar" Font="12" FontFamily="Tahoma" VerticalTextAlignment="Start" HorizontalTextAlignment="Center">
+
+                <Label Text="{translator:Translate welcome}" Font="12" FontFamily="Tahoma" VerticalTextAlignment="Start" HorizontalTextAlignment="Center">
                 </Label>
             </StackLayout>
 
-            <Frame  CornerRadius="5" 
-                    HasShadow="True"
+                <Frame 
                     IsClippedToBounds="True"
-                    OutlineColor="Gray" 
                     Padding="5"
                     WidthRequest="300">
                 <Entry x:Name="txtLogin"
-                           Placeholder="Entre com seu login"
+                           Placeholder="{translator:Translate placeholder_login}"
                            FontSize="Small"
                            Keyboard="Email"
                            VerticalOptions="Center"
                            HorizontalOptions="FillAndExpand"
                            TextColor="Black">
                 </Entry>
+                <Frame.CornerRadius>
+                    <OnPlatform x:TypeArguments="x:Single">
+                        <On Platform="iOS" Value="0"/>
+                        <On Platform="Android" Value="5"/>
+                    </OnPlatform>
+                </Frame.CornerRadius>
+                <Frame.BorderColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White"/>
+                        <On Platform="Android" Value="Gray"/>
+                    </OnPlatform>
+                </Frame.BorderColor>
+                <Frame.HasShadow>
+                    <OnPlatform x:TypeArguments="x:Boolean">
+                        <On Platform="iOS" Value="False"/>
+                        <On Platform="Android" Value="True"/>
+                    </OnPlatform>
+                </Frame.HasShadow>
+
             </Frame>
 
-            <Frame  CornerRadius="5" 
+            <Frame  
                     HorizontalOptions="Center" 
                     VerticalOptions="Start"
-                    HasShadow="True"
                     IsClippedToBounds="True"
-                    OutlineColor="Gray" 
-                    Padding="0,5,5,5"
                      WidthRequest="300">
+
                 <Entry x:Name="txtSenha"
-                           Placeholder="Entre com sua senha"
+                           Placeholder="{translator:Translate placeholder_password}"
                            FontSize="Small"
                            IsPassword="True"
                            VerticalOptions="Center"
                            HorizontalOptions="FillAndExpand"
                            TextColor="Black">
                 </Entry>
+                <Frame.CornerRadius>
+                    <OnPlatform x:TypeArguments="x:Single">
+                        <On Platform="iOS" Value="0"/>
+                        <On Platform="Android" Value="5"/>
+                    </OnPlatform>
+                </Frame.CornerRadius>
+                <Frame.BorderColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White"/>
+                        <On Platform="Android" Value="Gray"/>
+                    </OnPlatform>
+                </Frame.BorderColor>
+                <Frame.Padding>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="5,5,5,5"/>
+                        <On Platform="Android" Value="0,5,5,5"/>
+                    </OnPlatform>
+                </Frame.Padding>
+                <Frame.HasShadow>
+                    <OnPlatform x:TypeArguments="x:Boolean">
+                        <On Platform="iOS" Value="False"/>
+                        <On Platform="Android" Value="True"/>
+                    </OnPlatform>
+                </Frame.HasShadow>
             </Frame>
 
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
 
-                <Label Text="Lembrar-me" Font="18"
+                <Label Text="{translator:Translate remindme}" Font="18"
                            HorizontalOptions="Start"
                            VerticalOptions="Center">
                 </Label>
@@ -75,6 +117,24 @@
                              HorizontalOptions="End"
                              VerticalOptions="Center" Toggled="OnToggled">
                 </Switch>
+
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+
+                <Label Text="Não tem conta?" Font="14"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Center">
+                </Label>
+                
+                <Label Font="14"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Center"
+                           Text="Cadastre-se " TextColor="Blue" TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
 
             </StackLayout>
 
@@ -93,16 +153,27 @@
 
                 <Button x:Name="loginButton"
                         BackgroundColor="MediumPurple"
-                        Text="Entrar"
+                        Text="{translator:Translate bt_login}"
                         TextColor="White"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center">
                 </Button>
+                <Frame.CornerRadius>
+                    <OnPlatform x:TypeArguments="x:Single">
+                        <On Platform="iOS" Value="3"/>
+                        <On Platform="Android" Value="30"/>
+                    </OnPlatform>
+                </Frame.CornerRadius>
             </Frame>
 
 
         </StackLayout>
-
+        <Frame.CornerRadius>
+            <OnPlatform x:TypeArguments="x:Single">
+                <On Platform="iOS" Value="0"/>
+                <On Platform="Android" Value="30"/>
+            </OnPlatform>
+        </Frame.CornerRadius>
 
     </Frame>
 </ContentPage>

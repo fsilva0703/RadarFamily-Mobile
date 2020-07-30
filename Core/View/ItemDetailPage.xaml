@@ -13,7 +13,10 @@
             
             <Label Text="Login:" />
             <Entry Text="{Binding Item.Login}" x:Name="txtLogin" FontSize="Small"/>
-            
+
+            <Label Text="Senha:" />
+            <Entry Text="{Binding Item.Password}" x:Name="txtSenha" FontSize="Small" IsPassword="True"/>
+
             <Label Text="Tolerância p/ posição (metros):" />
             <Label Text="(Mínimo 30 metros)" FontSize="Micro" />
             

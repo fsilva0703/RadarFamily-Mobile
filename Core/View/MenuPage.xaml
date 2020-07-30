@@ -5,68 +5,79 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="RadarFamilyCore.View.MenuPage"
-             Title="Menu"
+             Title="|||"
              BackgroundColor="MediumPurple">
 
-    <StackLayout VerticalOptions="FillAndExpand">
-        <StackLayout VerticalOptions="FillAndExpand" Padding="20,10,0,10" Spacing="20" Orientation="Horizontal">
-            <Image 
-               x:Name="imgAvatar"    
-               WidthRequest="45" 
-               HeightRequest="45" 
-               VerticalOptions="Start">
-            </Image>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Label x:Name="lblUser"
+    <ContentPage.Content>
+
+
+        <StackLayout VerticalOptions="FillAndExpand" Margin="30" BackgroundColor="MediumPurple">
+            <StackLayout VerticalOptions="FillAndExpand" Margin="30" Orientation="Horizontal">
+                <Frame CornerRadius="5" 
+                    HorizontalOptions="Center" 
+                    VerticalOptions="Start"
+                    HasShadow="True"
+                    OutlineColor="Gray" 
+                    Padding="0,0,0,0">
+                    <Image 
+                       x:Name="imgAvatar"    
+                       WidthRequest="45" 
+                       HeightRequest="45" 
+                       VerticalOptions="Start"> 
+                    </Image>
+                </Frame>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="lblUser"
                    Text=""                                  
                    FontSize="20" 
                    TextColor="White"
                    Grid.Row="0" Grid.Column="0" />
-                <Label x:Name="lblLogin"
+                    <Label x:Name="lblLogin"
                    Text=""                                  
                    FontSize="Small" 
                    TextColor="White"
                    Grid.Row="1" Grid.Column="0" />
-            </Grid>
-        </StackLayout>
-        
-        <ListView x:Name="ListViewMenu"
+                </Grid>
+            </StackLayout>
+
+            <ListView x:Name="ListViewMenu" BackgroundColor="MediumPurple"
                     SeparatorVisibility="None">
-            <d:ListView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Item 1</x:String>
-                    <x:String>Item 2</x:String>
-                    <x:String>Item 3</x:String>
-                    <x:String>Item 4</x:String>
-                    <x:String>Item 5</x:String>
-                </x:Array>
-            </d:ListView.ItemsSource>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout VerticalOptions="FillAndExpand" Orientation="Horizontal"
+                <d:ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Item 1</x:String>
+                        <x:String>Item 2</x:String>
+                        <x:String>Item 3</x:String>
+                        <x:String>Item 4</x:String>
+                        <x:String>Item 5</x:String>
+                    </x:Array>
+                </d:ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout VerticalOptions="FillAndExpand" Orientation="Horizontal"
                                      Padding="20,10,0,10" Spacing="20">
-                            <Image Source="{Binding Icon}" 
+                                <Image Source="{Binding Icon}" 
                                    WidthRequest="40" 
                                    HeightRequest="40" 
                                    VerticalOptions="Center">
-                            </Image>
-                            <Label Text="{Binding Title}" 
+                                </Image>
+                                <Label Text="{Binding Title}" 
                                    d:Text="{Binding .}" 
                                    FontSize="15" 
                                    TextColor="White"/>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
 
 </ContentPage>

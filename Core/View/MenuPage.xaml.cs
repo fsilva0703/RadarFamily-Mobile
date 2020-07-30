@@ -1,25 +1,21 @@
 ﻿using RadarFamilyCore.Models;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace RadarFamilyCore.View
 {
-    // Learn more about making custom code visible in the Xamarin.Forms previewer
-    // by visiting https://aka.ms/xamarinforms-previewer
-    //[DesignTimeVisible(false)]
     public partial class MenuPage : ContentPage
+
     {
         MainPage RootPage { get => Application.Current.MainPage as MainPage; }
+
         List<HomeMenuItem> menuItems;
         public MenuPage()
         {
             InitializeComponent();
 
             lblUser.Text = Application.Current.Properties["Name"].ToString();
-            imgAvatar.Source = Application.Current.Properties["Avatar"].ToString();
+            imgAvatar.Source = string.Format("http://207.180.246.227:8095/img/{0}", Application.Current.Properties["Avatar"].ToString());
             lblLogin.Text = "("+Application.Current.Properties["login"].ToString()+")";
 
             menuItems = new List<HomeMenuItem>

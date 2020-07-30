@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
-using RadarFamilyCore.Models;
-using RadarFamilyCore.View;
+﻿using RadarFamilyCore.Models;
 using RadarFamilyCore.ViewModels;
 using RadarFamilyCore.ViewModels.Dto;
-using System.Net.Http;
-using Newtonsoft.Json;
+using System;
+using Xamarin.Forms;
 
 namespace RadarFamilyCore.View
 {

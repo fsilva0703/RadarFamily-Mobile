@@ -17,8 +17,8 @@ namespace RadarFamilyCore.View
             splashImage = new Image
             {
                 Source = "logo_new.jpg",
-                WidthRequest = 180,
-                HeightRequest = 180
+                WidthRequest = 100,
+                HeightRequest = 100
             };
 
             AbsoluteLayout.SetLayoutFlags(splashImage, AbsoluteLayoutFlags.PositionProportional);
@@ -30,7 +30,6 @@ namespace RadarFamilyCore.View
             this.Content = sub;
         }
 
-        [Obsolete]
         protected override async void OnAppearing()
         {
             base.OnAppearing();

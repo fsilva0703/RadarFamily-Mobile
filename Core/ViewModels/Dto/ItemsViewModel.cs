@@ -67,7 +67,7 @@ namespace RadarFamilyCore.ViewModels
                 using (var client = new HttpClient())
                 {
 
-                    string uri = "http://radarfamily.somee.com/RadarFamily/admin/UnitTracker/GetUnitTrackerByAdmin?paramIdAdmin=" + IdAdmin;
+                    string uri = "http://207.180.246.227:8095/admin/UnitTracker/GetUnitTrackerByAdmin?paramIdAdmin=" + IdAdmin;
 
                     HttpResponseMessage retorno = await client.GetAsync(uri);
 

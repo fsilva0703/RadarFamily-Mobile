@@ -24,8 +24,14 @@ namespace RadarFamilyCore.View
 
             //MenuPages.Add((int)MenuItemType.Pessoa, (NavigationPage)Detail);
             detailPage.BarBackgroundColor = Color.MediumPurple;
+            detailPage.BarTextColor = Color.White;
+            detailPage.Title = "Radar Family";
 
-            MenuPages.Add((int)MenuItemType.Pessoa, new NavigationPage(new TrackerUnitPage(MenuItemType.Pessoa)) { BarBackgroundColor = Color.MediumPurple, BarTextColor = Color.White, Title = "Unidades Rastreadas" });
+            IsPresented = true;
+
+            //MenuPages.Add((int)MenuItemType.Pessoa, new NavigationPage(new TrackerUnitPage(MenuItemType.Pessoa)) { BarBackgroundColor = Color.MediumPurple, BarTextColor = Color.White, Title = "Unidades Rastreadas" });
+
+       
         }
 
         public async Task NavigateFromMenu(int id)

@@ -4,6 +4,7 @@ using RadarFamilyCore.ViewModels.Dto;
 using System;
 using System.Net.Http;
 using System.Text;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,15 +13,9 @@ namespace RadarFamilyCore
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        [Obsolete]
         public LoginPage()
         {
             InitializeComponent();
-            this.Padding = Device.OnPlatform(
-                new Thickness(5, 10, 5, 5),
-                new Thickness(5),
-                new Thickness(5)
-                );
 
             if (Application.Current.Properties.ContainsKey("login") && Application.Current.Properties.ContainsKey("senha"))
             {
@@ -39,13 +34,15 @@ namespace RadarFamilyCore
             loginButton.Clicked += Login_ButtonClicked;
         }
 
-        [Obsolete]
         private async void Login_ButtonClicked(object sender, EventArgs e)
         {
+            waitActivityIndicator.IsRunning = true;
+
             if (String.IsNullOrEmpty(txtLogin.Text))
             {
                 await DisplayAlert("Erro", "Digite um login válido!", "Aceitar");
                 txtLogin.Focus();
+                waitActivityIndicator.IsRunning = false;
                 return;
             }
 
@@ -53,36 +50,35 @@ namespace RadarFamilyCore
             {
                 await DisplayAlert("Erro", "Digite uma senha válida!", "Aceitar");
                 txtSenha.Focus();
+                waitActivityIndicator.IsRunning = false;
                 return;
             }
 
-            this.LogarAsync();
+            this.LogarAsync(txtLogin.Text, txtSenha.Text);
         }
 
-        [Obsolete]
-        private async void LogarAsync()
+        public async void LogarAsync(string login, string senha)
         {
 
             try
             {
                 using (var client = new HttpClient())
                 {
-                    waitActivityIndicator.IsRunning = true;
 
-                    var loginRequest = new DtoLogin
+                    DtoLogin loginRequest = new DtoLogin()
                     {
-                        Login = txtLogin.Text,
-                        Password = txtSenha.Text,
+                        Login = login,
+                        Password = senha,
                     };
 
                     var jsonRequest = JsonConvert.SerializeObject(loginRequest);
                     var httpContent = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
 
-                    string uri = "http://radarfamily.somee.com/RadarFamily/admin/Login/GetLogin";
+                    string uri = "http://207.180.246.227:8095/admin/Login/GetLogin";
 
-                    var retorno = await client.PostAsync(uri, httpContent);
+                    var retorno = client.PostAsync(uri, httpContent).Result;
 
-                    var resultString = await retorno.Content.ReadAsStringAsync();
+                    var resultString = retorno.Content.ReadAsStringAsync().Result;
 
                     if (retorno.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
@@ -133,6 +129,7 @@ namespace RadarFamilyCore
                     await Application.Current.SavePropertiesAsync();
 
                     waitActivityIndicator.IsRunning = false;
+
                     if (user.IsAdmin)
                         Application.Current.MainPage = new MainPage(user);
                     else
@@ -140,9 +137,9 @@ namespace RadarFamilyCore
 
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                await DisplayAlert("Erro", ex.Message, "Erro ao logar...");
+                await DisplayAlert("Erro", "Ocorreu um erro. Tente de novo, por favor.", "Conexão falhou");
                 waitActivityIndicator.IsRunning = false;
                 return;
             }
@@ -162,6 +159,11 @@ namespace RadarFamilyCore
                 lembrarmeSwitch.OnColor = Color.Gray;
                 lembrarmeSwitch.ThumbColor = Color.Green;
             }
+        }
+
+        private async void Handle_Tapped(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new PrincipalPage());
         }
     }
 }

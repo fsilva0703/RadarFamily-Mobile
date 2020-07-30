@@ -1,35 +1,25 @@
 ﻿using Newtonsoft.Json;
 using RadarFamilyCore.Models;
 using RadarFamilyCore.Service;
+using RadarFamilyCore.ViewModels;
 using RadarFamilyCore.ViewModels.Dto;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using Xamarin.Forms;
-using Xamarin.Forms.Maps;
-using Xamarin.Forms.Xaml;
 using Xamarin.Forms.GoogleMaps;
+using Color = Xamarin.Forms.Color;
+using Distance = Xamarin.Forms.GoogleMaps.Distance;
+using MapSpan = Xamarin.Forms.GoogleMaps.MapSpan;
 using Pin = Xamarin.Forms.GoogleMaps.Pin;
 using PinType = Xamarin.Forms.GoogleMaps.PinType;
-using Position = Xamarin.Forms.GoogleMaps.Position;
-using MapSpan = Xamarin.Forms.GoogleMaps.MapSpan;
-using Distance = Xamarin.Forms.GoogleMaps.Distance;
-using Android.Graphics;
-using Android.Widget;
-using System.IO;
-using System.Reflection;
-using FFImageLoading;
 using Polyline = Xamarin.Forms.GoogleMaps.Polyline;
-using Color = Xamarin.Forms.Color;
+using Position = Xamarin.Forms.GoogleMaps.Position;
 
 namespace RadarFamilyCore.View
 {
-    // Learn more about making custom code visible in the Xamarin.Forms previewer
-    // by visiting https://aka.ms/xamarinforms-previewer
-    //[DesignTimeVisible(false)]
     public partial class TrackingPage : ContentPage
     {
         public TrackingPage(MenuItemType ItemTracking)
@@ -38,10 +28,12 @@ namespace RadarFamilyCore.View
 
             MyMap.MyLocationEnabled = true;
             MyMap.UiSettings.MyLocationButtonEnabled = true;
+            
+            MyMap.UiSettings.ZoomControlsEnabled = true;
 
             if ((int)ItemTracking == 1)
             {
-                this.MontaUltimaPosicao();
+                BindingContext = new TrackingPageViewModel((int)Application.Current.Properties["IdUser"]);
                 this.Title = "Últimas Posições";
             }
             else
@@ -54,13 +46,15 @@ namespace RadarFamilyCore.View
 
         private async void MontaUltimaPosicao()
         {
+            Int32 IdAdmin = (int)Application.Current.Properties["IdUser"];
+
             List<DtoPosition> itens = new List<DtoPosition>();
             try
             {
                 using (var client = new HttpClient())
                 {
 
-                    string uri = "http://radarfamily.somee.com/RadarFamily/admin/Position/GetLastPosition?paramIdUnidadeRastreada=";
+                    string uri = "http://207.180.246.227:8095/admin/Position/GetLastPosition?paramIdAdmin=" + IdAdmin;
 
                     HttpResponseMessage retorno = await client.GetAsync(uri);
 
@@ -74,45 +68,74 @@ namespace RadarFamilyCore.View
                     if (resultString != "[]")
                     {
                         PositionService pos = new PositionService();
-                        lvPosition.ItemsSource = JsonConvert.DeserializeObject<List<DtoPosition>>(resultString);
-                        int countPos = JsonConvert.DeserializeObject<List<DtoPosition>>(resultString).Count();
 
-                        var polyline = new Polyline();
+                        List<DtoPosition> listPosition = new List<DtoPosition>();
 
-                        foreach (DtoPosition x in lvPosition.ItemsSource)
+                        foreach (var item in JsonConvert.DeserializeObject<List<DtoPosition>>(resultString))
                         {
-
-                            polyline.Positions.Add(new Position(x.Latitude, x.Longitude));
-
-                            polyline.StrokeColor = Color.Red;
-                            polyline.StrokeWidth = 5f;
-                            polyline.Tag = "POLYLINE"; // Can set any object
-
-                            polyline.IsClickable = false;
-                            polyline.Clicked += (s, e) =>
+                            DtoPosition position = new DtoPosition()
                             {
-                                // handle click polyline
+
+                                Name = item.Name,
+                                DateEvent = item.DateEvent,
+                                DateAtualizacao = item.DateAtualizacao,
+                                Avatar = item.Avatar,
+                                Address = item.Address,
+                                LatLong = item.LatLong,
+                                Latitude = item.Latitude,
+                                Longitude = item.Longitude
                             };
-
-
-                            Pin pin = new Pin()
-                            {
-                                Icon = BitmapDescriptorFactory.FromBundle(x.Avatar),
-                                Type = PinType.Place,
-                                Label = x.Name,
-                                Address = x.Address,
-                                Position = new Position(x.Latitude, x.Longitude),
-                                ZIndex = 5
-                            };
-
-                            MyMap.Pins.Add(pin);
+                            listPosition.Add(position);
                         }
 
-                        MyMap.Polylines.Add(polyline);
+                        lvPosition.ItemsSource = listPosition;
 
-                        Coordenates geo = await pos.GetCurrentPositionAsync();
+                        //var polyline = new Polyline();
 
-                        MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(geo.lat, geo.lng), Distance.FromMeters(5000)));
+                        //foreach (DtoPosition x in lvPosition.DataSource.Items)
+                        //{
+
+                        //    polyline.Positions.Add(new Position(x.Latitude, x.Longitude));
+
+                        //    polyline.StrokeColor = Color.Red;
+                        //    polyline.StrokeWidth = 5f;
+                        //    polyline.Tag = "POLYLINE"; // Can set any object
+
+                        //    polyline.IsClickable = false;
+                        //    polyline.Clicked += (s, e) =>
+                        //    {
+                        //        // handle click polyline
+                        //    };
+
+
+                        //    Pin pin = new Pin()
+                        //    {
+                        //        Icon = BitmapDescriptorFactory.FromBundle(x.Avatar),
+                        //        Type = PinType.Place,
+                        //        Label = x.Name,
+                        //        Address = x.Address,
+                        //        Position = new Position(x.Latitude, x.Longitude),
+                        //        ZIndex = 5, 
+                        //    };
+
+                        //    MyMap.Pins.Add(pin);
+                        //}
+
+                        //MyMap.Polylines.Add(polyline);
+                        Dictionary<Coordenates, Velocity> geo = new Dictionary<Coordenates, Velocity>();
+
+                        Coordenates geoLoc = new Coordenates();
+
+                        geo = await pos.GetCurrentPositionAsync();
+
+                        foreach (KeyValuePair<Coordenates, Velocity> dadosGeo in geo)
+                        {
+
+                            geoLoc.lat = dadosGeo.Key.lat;
+                            geoLoc.lng = dadosGeo.Key.lng;
+                        }
+
+                        MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(geoLoc.lat, geoLoc.lng), Distance.FromKilometers(1)));
 
                         
                         //waitActivityIndicator.IsVisible = false;
@@ -162,7 +185,7 @@ namespace RadarFamilyCore.View
                     waitActivityIndicator.IsVisible = true;
                     waitActivityIndicator.IsRunning = true;
 
-                    string uri = "http://www.radarfamily.somee.com/RadarFamily/admin/Position/GetHistoricPositionByData?paramDataIni=2020-04-01T08:00:00&paramDataFim=2020-12-31T12:00:00";
+                    string uri = "http://207.180.246.227:8095/admin/Position/GetHistoricPositionByData?paramDataIni=2020-04-01T08:00:00&paramDataFim=2020-12-31T12:00:00";
 
                     HttpResponseMessage retorno = await client.GetAsync(uri);
 
@@ -180,9 +203,20 @@ namespace RadarFamilyCore.View
                         lvPosition.ItemsSource = JsonConvert.DeserializeObject<List<DtoPosition>>(resultString);
                         int countPos = JsonConvert.DeserializeObject<List<DtoPosition>>(resultString).Count();
 
-                        Coordenates geo = await pos.GetCurrentPositionAsync();
+                        Dictionary<Coordenates, Velocity> geo = new Dictionary<Coordenates, Velocity>();
 
-                        MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(geo.lat, geo.lng), Distance.FromMeters(5000)));
+                        Coordenates geoLoc = new Coordenates();
+
+                        geo = await pos.GetCurrentPositionAsync();
+
+                        foreach (KeyValuePair<Coordenates, Velocity> dadosGeo in geo)
+                        {
+
+                            geoLoc.lat = dadosGeo.Key.lat;
+                            geoLoc.lng = dadosGeo.Key.lng;
+                        }
+
+                        MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(geoLoc.lat, geoLoc.lng), Distance.FromMeters(5000)));
                     }
                     else
                     {
@@ -203,7 +237,7 @@ namespace RadarFamilyCore.View
             }
         }
 
-        private async void OnTappedTitulo(object sender, EventArgs e)
+        private void OnTappedTitulo(object sender, EventArgs e)
         {
             Label lblClicked = (Label)sender;
             var item = (TapGestureRecognizer)lblClicked.GestureRecognizers[0];

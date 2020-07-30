@@ -60,6 +60,11 @@ namespace RadarFamilyCore
         public Double lng { get; set; }
     }
 
+    public class Velocity
+    {
+        public Double? speed { get; set; }
+    }
+
     public class Viewport
     {
         public Northeast northeast { get; set; }

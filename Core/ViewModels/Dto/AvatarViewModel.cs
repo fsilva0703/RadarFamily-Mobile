@@ -56,7 +56,7 @@ namespace RadarFamilyCore.ViewModels.Dto
                 using (var client = new HttpClient())
                 {
 
-                    string uri = "http://radarfamily.somee.com/RadarFamily/admin/UnitTracker/GetAvatar";
+                    string uri = "http://207.180.246.227:8095/admin/UnitTracker/GetAvatar";
 
                     HttpResponseMessage retorno = await client.GetAsync(uri);
 

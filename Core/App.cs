@@ -1,8 +1,10 @@
 ﻿using Xamarin.Forms;
-using System;
 using RadarFamilyCore.View;
 using Xamarin.Essentials;
 using RadarFamilyCore.Service;
+using RadarFamilyCore.Resources;
+using Plugin.Multilingual;
+using Com.OneSignal;
 
 namespace RadarFamilyCore
 {
@@ -10,8 +12,7 @@ namespace RadarFamilyCore
 	{
 		#region Constructor
 		//private readonly BackgroundPage _backgroundPage;
-		public static string AzureBackendUrl =
-			DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5000" : "http://localhost:5000";
+		public static string AzureBackendUrl = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5000" : "http://localhost:5000";
 		public static bool UseMockDataStore = true;
 
 		public App ()
@@ -27,6 +28,12 @@ namespace RadarFamilyCore
 			else
 				DependencyService.Register<AzureDataStore>();
 
+			AppResources.Culture = CrossMultilingual.Current.DeviceCultureInfo;
+
+			OneSignal.Current.StartInit("a3cd15a8-3fde-435d-b210-cb771ba6007b").EndInit();
+
+			Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mjg1Mzc1QDMxMzgyZTMyMmUzMGFHUTdTdTE5ODNucDFDeFZMMFhNY0hXOVdMbURCUWhPNjlvVjRJSEJ2Vkk9");
+
 			MainPage = new NavigationPage(new SplashPage()) { BarBackgroundColor = Color.MediumPurple, BarTextColor = Color.White };
 		}
 		#endregion
@@ -34,6 +41,7 @@ namespace RadarFamilyCore
 		protected override void OnStart ()
 		{
 			//LoadPersistedValues ();
+			OneSignal.Current.RegisterForPushNotifications();
 		}
 
 		protected override void OnSleep ()

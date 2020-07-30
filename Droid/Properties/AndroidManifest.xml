@@ -1,8 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.fabiodepaula.RadarFamilyCore" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="28" />
-	<application android:label="RadarFamily">
+	<uses-sdk android:minSdkVersion="16" android:targetSdkVersion="28" />
+	<application android:label="RadarFamilyCore" android:usesCleartextTraffic="true" android:icon="@drawable/icon">
 		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyDPxQFP4WSIpMLk_610YoYwxa09i9Xx89c" />
+
+    <receiver android:name="com.onesignal.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+      <intent-filter>
+        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+        <category android:name="com.fabiodepaula.RadarFamilyCore" />
+      </intent-filter>
+    </receiver>
+    
 	</application>
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -12,5 +21,11 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 	<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
-	<application android:label="RadarFamilyCore"></application>
+  <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
+  <uses-permission android:name="android.permission.CLEAR_APP_USER_DATA" />
+  <uses-permission android:name="android.permission.BATTERY_STATS" />
+
+  <permission android:name="com.fabiodepaula.RadarFamilyCore.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+  <uses-permission android:name="com.fabiodepaula.RadarFamilyCore.permission.C2D_MESSAGE" />
+
 </manifest>

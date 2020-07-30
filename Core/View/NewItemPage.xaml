@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="RadarFamilyCore.View.NewItemPage"
-             Title="|||New|||">
+             Title="">
     
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Cancelar" Clicked="Cancel_Clicked" />
@@ -15,12 +15,84 @@
     <ContentPage.Content>
         <ScrollView HorizontalOptions="StartAndExpand" Margin="0">
             <StackLayout>
-                <StackLayout Padding="5,5,0,0">
+                <StackLayout Padding="10" Spacing="10">
                     <Label Text="Nome:"  />
-                    <Entry x:Name="txtName" FontSize="Small" />
+                    <Frame 
+                        IsClippedToBounds="True"
+                        Padding="0,0,0,0"
+                        WidthRequest="300">
+                        <Entry x:Name="txtName" FontSize="Small" Placeholder="Digite o nome ou apelido da unidade" />
+                        <Frame.CornerRadius>
+                            <OnPlatform x:TypeArguments="x:Single">
+                                <On Platform="iOS" Value="0"/>
+                                <On Platform="Android" Value="5"/>
+                            </OnPlatform>
+                        </Frame.CornerRadius>
+                        <Frame.BorderColor>
+                            <OnPlatform x:TypeArguments="Color">
+                                <On Platform="iOS" Value="White"/>
+                                <On Platform="Android" Value="Gray"/>
+                            </OnPlatform>
+                        </Frame.BorderColor>
+                        <Frame.HasShadow>
+                            <OnPlatform x:TypeArguments="x:Boolean">
+                                <On Platform="iOS" Value="False"/>
+                                <On Platform="Android" Value="True"/>
+                            </OnPlatform>
+                        </Frame.HasShadow>
+                    </Frame>
 
                     <Label Text="Login:" />
-                    <Entry x:Name="txtLogin" FontSize="Small"/>
+                    <Frame 
+                        IsClippedToBounds="True"
+                        Padding="0,0,0,0"
+                        WidthRequest="300">
+                    <Entry x:Name="txtLogin" FontSize="Small" Placeholder="Digite o login da unidade"/>
+                        <Frame.CornerRadius>
+                            <OnPlatform x:TypeArguments="x:Single">
+                                <On Platform="iOS" Value="0"/>
+                                <On Platform="Android" Value="5"/>
+                            </OnPlatform>
+                        </Frame.CornerRadius>
+                        <Frame.BorderColor>
+                            <OnPlatform x:TypeArguments="Color">
+                                <On Platform="iOS" Value="White"/>
+                                <On Platform="Android" Value="Gray"/>
+                            </OnPlatform>
+                        </Frame.BorderColor>
+                        <Frame.HasShadow>
+                            <OnPlatform x:TypeArguments="x:Boolean">
+                                <On Platform="iOS" Value="False"/>
+                                <On Platform="Android" Value="True"/>
+                            </OnPlatform>
+                        </Frame.HasShadow>
+                    </Frame>
+
+                    <Label Text="Senha:" />
+                    <Frame 
+                        IsClippedToBounds="True"
+                        Padding="0,0,0,0"
+                        WidthRequest="300">
+                    <Entry x:Name="txtSenha" FontSize="Small" Placeholder="Digite a senha" IsPassword="True"/>
+                        <Frame.CornerRadius>
+                            <OnPlatform x:TypeArguments="x:Single">
+                                <On Platform="iOS" Value="0"/>
+                                <On Platform="Android" Value="5"/>
+                            </OnPlatform>
+                        </Frame.CornerRadius>
+                        <Frame.BorderColor>
+                            <OnPlatform x:TypeArguments="Color">
+                                <On Platform="iOS" Value="White"/>
+                                <On Platform="Android" Value="Gray"/>
+                            </OnPlatform>
+                        </Frame.BorderColor>
+                        <Frame.HasShadow>
+                            <OnPlatform x:TypeArguments="x:Boolean">
+                                <On Platform="iOS" Value="False"/>
+                                <On Platform="Android" Value="True"/>
+                            </OnPlatform>
+                        </Frame.HasShadow>
+                    </Frame>
 
                     <Label Text="Tolerância p/ posição (metros):" />
                     <Label Text="(Mínimo 30 metros)" FontSize="Micro" />
@@ -95,6 +167,7 @@
                     <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadItemsCommand}">
                         <StackLayout>
                             <CollectionView x:Name="ItemsCollectionView" ItemsSource="{Binding Items}" SelectionMode="Single">
+                                
                                 <CollectionView.ItemsLayout>
                                     <GridItemsLayout Orientation="Vertical"
                                 Span="3" />

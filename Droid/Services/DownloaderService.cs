@@ -21,16 +21,16 @@ namespace RadarFamily.Droid
 		{
 			var url = intent.GetStringExtra ("url");
 
-            Task.Run (() => {
-				var imageHelper = new ImageHelper ();
-				imageHelper.DownloadImageAsync (url)
-                        .ContinueWith (filePath => {
-					                        var message = new DownloadFinishedMessage {
-						                        FilePath = filePath.Result
-					                        };
-					                        MessagingCenter.Send (message, "DownloadFinishedMessage");
-				                        });
-			});
+   //         Task.Run (() => {
+			//	var imageHelper = new ImageHelper ();
+			//	imageHelper.DownloadImageAsync (url)
+   //                     .ContinueWith (filePath => {
+			//		                        var message = new DownloadFinishedMessage {
+			//			                        FilePath = filePath.Result
+			//		                        };
+			//		                        MessagingCenter.Send (message, "DownloadFinishedMessage");
+			//	                        });
+			//});
 
 			return StartCommandResult.Sticky;
 		}

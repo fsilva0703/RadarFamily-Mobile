@@ -13,6 +13,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
+
 namespace RadarFamilyCore.Service
 {
     public class PositionService
@@ -21,9 +22,11 @@ namespace RadarFamilyCore.Service
         public PositionService()
         {
         }
-        public async Task<Coordenates> GetCurrentPositionAsync()
+        public async Task<Dictionary<Coordenates, Velocity>> GetCurrentPositionAsync()
         {
+            Dictionary<Coordenates, Velocity> geoSpeed = new Dictionary<Coordenates, Velocity>();
             Coordenates geo = new Coordenates();
+            Velocity vel = new Velocity();
 
             var loc = await Geolocation.GetLastKnownLocationAsync();
             if(loc == null)
@@ -32,10 +35,14 @@ namespace RadarFamilyCore.Service
                 loc = await Geolocation.GetLocationAsync(request);
             }
 
+            vel.speed = loc.Speed;
+
             geo.lat = loc.Latitude;
             geo.lng = loc.Longitude;
 
-            return geo;
+            geoSpeed.Add(geo, vel);
+
+            return geoSpeed;
             
         }
 
@@ -60,6 +67,7 @@ namespace RadarFamilyCore.Service
 
         public async Task<String> GetAddressByReverseGeoCode(Double lat, Double lng)
         {
+
             Geocoder geoCoder = new Geocoder();
 
             Position position = new Position(lat, lng);
@@ -76,7 +84,7 @@ namespace RadarFamilyCore.Service
             using (var client = new HttpClient())
             {
 
-                string uri = "http://radarfamily.somee.com/RadarFamily/admin/Position/GetLastPosition?paramIdUnidadeRastreada=" + paramIdeUnidadeRastreada;
+                string uri = "http://207.180.246.227:8095/admin/Position/GetLastPosition?paramIdUnidadeRastreada=" + paramIdeUnidadeRastreada;
 
                 var retorno = await client.GetAsync(uri);
 
@@ -112,24 +120,38 @@ namespace RadarFamilyCore.Service
                 Int32 Tolerancia = (Int32)Application.Current.Properties["CalculoDistancia"];
 
                 try
-                
                 {
 
                     if (Application.Current.Properties["IdUnidadeRastreada"] != null && (Boolean)Application.Current.Properties["IsAdmin"] == false)
                     {
                         //Posição atual
-                        Coordenates loc = await GetCurrentPositionAsync();
+                        Dictionary<Coordenates, Velocity> loc = new Dictionary<Coordenates, Velocity>();
+                        Coordenates geoLoc = new Coordenates();
+
+                        loc = await GetCurrentPositionAsync();
 
                         if (loc != null)
                         {
-                            Double lat = 0;
-                            Double lng = 0;
 
-                            lat = loc.lat;
-                            lng = loc.lng;
+                            Double? speed = 0;
 
-                            //Reverser GeoCode para endereço
-                            String address = await GetAddressByReverseGeoCode(lat, lng);
+                            foreach (KeyValuePair<Coordenates, Velocity> dadosGeo in loc)
+                            {
+
+                                geoLoc.lat = dadosGeo.Key.lat;
+                                geoLoc.lng = dadosGeo.Key.lng;
+
+                                speed = dadosGeo.Value.speed;
+                            }
+
+                            String address = null;
+
+                            await Task.Run(async () =>
+                             {
+                                //Reverser GeoCode para endereço
+                                address = await GetAddressByReverseGeoCode(geoLoc.lat, geoLoc.lng);
+                             });
+                            
 
                             //Posição anterior
                             DtoPosition lastPos = new DtoPosition();
@@ -145,7 +167,7 @@ namespace RadarFamilyCore.Service
                                 lastLatLong.lat = lastPos.Latitude;
                                 lastLatLong.lng = lastPos.Longitude;
 
-                                Double distance = await GetCalculateDistance(IdUnidadeRastreada, lastLatLong, loc);
+                                Double distance = await GetCalculateDistance(IdUnidadeRastreada, lastLatLong, geoLoc);
 
                                 if (distance > Tolerancia || lastPos.DateEvent.Day != DateTime.Today.Day)
                                     gravaPosicao = true;
@@ -153,6 +175,9 @@ namespace RadarFamilyCore.Service
                                     gravaPosicao = false;
 
                             }
+
+                            var level = Battery.ChargeLevel;
+
                             if (gravaPosicao)
                             {
 
@@ -166,16 +191,18 @@ namespace RadarFamilyCore.Service
                                         Name = Application.Current.Properties["Name"].ToString(),
                                         DateEvent = DateTime.Now,
                                         Address = address,
-                                        Latitude = lat,
-                                        Longitude = lng,
+                                        Latitude = geoLoc.lat,
+                                        Longitude = geoLoc.lng,
                                         IdRegra = null,
-                                        Avatar = Application.Current.Properties["Avatar"].ToString()
+                                        Avatar = Application.Current.Properties["Avatar"].ToString(),
+                                        LevelBattery = level,
+                                        Velocity = (double)speed
                                     };
 
                                     var jsonRequest = JsonConvert.SerializeObject(positionRequest);
                                     var httpContent = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
 
-                                    string uri = "http://radarfamily.somee.com/RadarFamily/admin/Position/SetLastPosition";
+                                    string uri = "http://207.180.246.227:8095/admin/Position/SetLastPosition";
 
                                     var retorno = await client.PostAsync(uri, httpContent);
 

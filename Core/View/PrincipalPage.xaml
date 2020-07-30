@@ -4,13 +4,184 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:local="clr-namespace:RadarFamilyCore.ViewModels.Dto"
              x:Class="RadarFamilyCore.View.PrincipalPage"
-             Title="PrincipalPage">
+             NavigationPage.HasBackButton="True"
+             Title="Novo Registro - Radar Family"
+             BackgroundColor="MediumPurple">
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Frame HorizontalOptions="CenterAndExpand" 
+           VerticalOptions="Fill"
+           HasShadow="True"
+           IsClippedToBounds="True"
+           OutlineColor="MediumPurple" 
+           Padding="20"
+           BackgroundColor="White"
+           Margin="5">
+            <StackLayout>
+                <!--<StackLayout Margin="5" HorizontalOptions="Center" Padding="0,0,0,0" VerticalOptions="Start">
+                    <Image Source="logo_new.jpg" WidthRequest="150" HeightRequest="150">
+                    </Image>
+                </StackLayout>-->
+
+                <ScrollView HorizontalOptions="CenterAndExpand" Margin="0">
+                    <StackLayout>
+                        <StackLayout Padding="5,5,0,0">
+                            <Label Text="Nome:"  />
+                            <Frame 
+                        IsClippedToBounds="True"
+                        Padding="5"
+                        WidthRequest="300">
+                                <Entry x:Name="txtName" FontSize="Small" Placeholder="Digite o nome ou apelido" />
+                                <Frame.CornerRadius>
+                                    <OnPlatform x:TypeArguments="x:Single">
+                                        <On Platform="iOS" Value="0"/>
+                                        <On Platform="Android" Value="5"/>
+                                    </OnPlatform>
+                                </Frame.CornerRadius>
+                                <Frame.BorderColor>
+                                    <OnPlatform x:TypeArguments="Color">
+                                        <On Platform="iOS" Value="White"/>
+                                        <On Platform="Android" Value="Gray"/>
+                                    </OnPlatform>
+                                </Frame.BorderColor>
+                                <Frame.HasShadow>
+                                    <OnPlatform x:TypeArguments="x:Boolean">
+                                        <On Platform="iOS" Value="False"/>
+                                        <On Platform="Android" Value="True"/>
+                                    </OnPlatform>
+                                </Frame.HasShadow>
+                            </Frame>
+
+                            <Label Text="Login:" />
+                            <Frame 
+                        IsClippedToBounds="True"
+                        Padding="5"
+                        WidthRequest="300">
+                                <Entry x:Name="txtLogin" FontSize="Small" Placeholder="Digite o e-mail"/>
+                                <Frame.CornerRadius>
+                                    <OnPlatform x:TypeArguments="x:Single">
+                                        <On Platform="iOS" Value="0"/>
+                                        <On Platform="Android" Value="5"/>
+                                    </OnPlatform>
+                                </Frame.CornerRadius>
+                                <Frame.BorderColor>
+                                    <OnPlatform x:TypeArguments="Color">
+                                        <On Platform="iOS" Value="White"/>
+                                        <On Platform="Android" Value="Gray"/>
+                                    </OnPlatform>
+                                </Frame.BorderColor>
+                                <Frame.HasShadow>
+                                    <OnPlatform x:TypeArguments="x:Boolean">
+                                        <On Platform="iOS" Value="False"/>
+                                        <On Platform="Android" Value="True"/>
+                                    </OnPlatform>
+                                </Frame.HasShadow>
+                            </Frame>
+
+                            <Label Text="Senha:" />
+                            <Frame 
+                                IsClippedToBounds="True"
+                                Padding="5"
+                                WidthRequest="300"> 
+                                <Entry x:Name="txtSenha" FontSize="Small" Placeholder="Digite a senha" IsPassword="True"/>
+                                <Frame.CornerRadius>
+                                    <OnPlatform x:TypeArguments="x:Single">
+                                        <On Platform="iOS" Value="0"/>
+                                        <On Platform="Android" Value="5"/>
+                                    </OnPlatform>
+                                </Frame.CornerRadius>
+                                <Frame.BorderColor>
+                                    <OnPlatform x:TypeArguments="Color">
+                                        <On Platform="iOS" Value="White"/>
+                                        <On Platform="Android" Value="Gray"/>
+                                    </OnPlatform>
+                                </Frame.BorderColor>
+                                <Frame.HasShadow>
+                                    <OnPlatform x:TypeArguments="x:Boolean">
+                                        <On Platform="iOS" Value="False"/>
+                                        <On Platform="Android" Value="True"/>
+                                    </OnPlatform>
+                                </Frame.HasShadow>
+                            </Frame>
+
+
+                            <Label Text="Selecione abaixo o Avatar desejado:" />
+
+                            <CollectionView HeightRequest="85" x:Name="ItemsCollectionView" SelectionMode="Single">
+
+                                <CollectionView.ItemsSource>
+                                    <x:Array Type="{x:Type local:DtoAvatar}">
+                                        <local:DtoAvatar Name="avatar6.png" />
+                                        <local:DtoAvatar Name="avatar10.png" />
+                                    </x:Array>
+                                </CollectionView.ItemsSource>
+                                
+                                <CollectionView.ItemsLayout>
+                                    <GridItemsLayout Orientation="Vertical" Span="2" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="100" />
+                                            </Grid.ColumnDefinitions>
+                                            <Frame CornerRadius="5" 
+                                                    HorizontalOptions="Center" 
+                                                    VerticalOptions="Start"
+                                                    HasShadow="True"
+                                                    OutlineColor="Gray" 
+                                                    Padding="0,0,0,0">
+                                                <Image Grid.RowSpan="2" 
+                                                   Source="{Binding Name}" 
+                                                   Aspect="AspectFit"
+                                                   HeightRequest="80"
+                                                   WidthRequest="80"/>
+                                            </Frame>
+
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                                
+                            </CollectionView>
+                      
+
+                            <ActivityIndicator x:Name="waitActivityIndicator"
+                                       HorizontalOptions="CenterAndExpand"
+                                       VerticalOptions="CenterAndExpand"
+                               Color="MediumPurple">
+                            </ActivityIndicator>
+
+                            <Frame  CornerRadius="30" 
+                                    HasShadow="True"
+                                    OutlineColor="Gray" 
+                                    Padding="0,0,0,0"
+                                     WidthRequest="300" HorizontalOptions="CenterAndExpand">        
+
+                                <Button x:Name="saveButton"
+                        BackgroundColor="MediumPurple"
+                        Text="Registrar"
+                        TextColor="White"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center">
+                                </Button>
+                            </Frame>
+
+                        </StackLayout>
+                        <Label Margin="0" Text="*Este será o usuário administrador do sistema." FontSize="Small" HorizontalOptions="Center" />
+
+
+
+
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+        </Frame>
     </ContentPage.Content>
 </ContentPage>

@@ -6,8 +6,17 @@
              mc:Ignorable="d"
              x:Class="RadarFamilyCore.View.TrackingPage"
              xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+             xmlns:local1="clr-namespace:RadarFamilyCore.Helpers" 
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              BackgroundColor="White">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local1:DateTimeConverter x:Key="dateTimeConverter" />
+            <local1:AvatarImageConverter x:Key="avatarImageConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
         <StackLayout>
             <Grid>
@@ -29,23 +38,77 @@
                                        Color="MediumPurple"  IsVisible="False">
             </ActivityIndicator>
 
-            <ListView x:Name="lvPosition" SeparatorColor="Black" SeparatorVisibility="Default" RowHeight="100" HasUnevenRows="True">
+            <ListView x:Name="lvPosition" ItemsSource="{Binding Items}" Margin="5"  SeparatorVisibility="None"  HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <!--<Image Source="{Binding urlFile}" HorizontalOptions="Start" HeightRequest="60" WidthRequest="60" />-->
-                                <StackLayout Orientation="Vertical" Padding="10,5,5,10" HorizontalOptions="Start">
-                                    <Label Text = "{Binding Name}" TextColor="Black" Font="10" HorizontalTextAlignment="Start" FontAttributes="Bold" />
-                                    <Label Text = "{Binding DateEvent}" TextColor="Black" FontSize="10" HorizontalTextAlignment="Start" />
-                                    <Label Text = "{Binding Address}" TextColor="Blue" TextDecorations="Underline" Font="12" FontAttributes="Bold" HorizontalTextAlignment="Start" TextType="Html">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer CommandParameter="{Binding LatLong}" Tapped="OnTappedTitulo"/>
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                    <!--<Label Text = "{Binding subtitulo}" Font="12" HorizontalTextAlignment="Start" MaxLines="3" />-->
+                            <Frame OutlineColor="#b3b3b3" Padding="10" Margin="5,10,5,0" CornerRadius="10">
+                                <StackLayout Orientation="Horizontal">
+                                    <!--<Image Source="{Binding urlFile}" HorizontalOptions="Start" HeightRequest="60" WidthRequest="60" />-->
+                                    <StackLayout Orientation="Horizontal">
+                                        <Grid RowSpacing="5" ColumnSpacing="5" Padding="0,0,0,0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"></RowDefinition>
+                                                <RowDefinition Height="Auto"></RowDefinition>
+                                                <RowDefinition Height="Auto"></RowDefinition>
+                                                <RowDefinition Height="Auto"></RowDefinition>
+                                                <RowDefinition Height="Auto"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="45"></ColumnDefinition>
+                                                <ColumnDefinition Width="15"></ColumnDefinition>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="15"></ColumnDefinition>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="10"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="5" Padding="5,0,30,0" HorizontalOptions="End">
+                                                <ffimageloading:CachedImage HorizontalOptions="Start"
+                                                  Source="http://207.180.246.227:8095/img/icon_battery_full.png"
+                                                 CacheDuration="7" WidthRequest="27" HeightRequest="10" >
+                                                </ffimageloading:CachedImage>
+                                            </StackLayout>
+
+                                            <Frame CornerRadius="5" 
+                                                        HorizontalOptions="Start" 
+                                                        VerticalOptions="Start"
+                                                        HasShadow="True"
+                                                        OutlineColor="White" 
+                                                        Padding="0,0,0,0"
+                                                        Grid.RowSpan="4"
+                                                        Grid.Column="0">
+
+                                            <ffimageloading:CachedImage HorizontalOptions="Start"
+                                                  Source="{Binding Avatar, Converter={StaticResource avatarImageConverter}}"
+                                                 CacheDuration="7" WidthRequest="35" HeightRequest="40" >
+                                            </ffimageloading:CachedImage>
+                                            </Frame>
+                                            <Label Text = "{Binding Name}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="0" TextColor="Black" Font="12" HorizontalTextAlignment="Start" FontAttributes="Bold" />
+                                            <Image Source="eventDate.png" WidthRequest="18" HeightRequest="16" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Aspect="AspectFit" HorizontalOptions="Start" VerticalOptions="Start"/>
+                                            <Label Text = "{Binding DateEvent, Converter={StaticResource dateTimeConverter}}" Grid.Column="2" Grid.Row="2" TextColor="Black" FontSize="10" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" />
+                                            <Image Source="updatedDate.png" WidthRequest="18" HeightRequest="16" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="2" Aspect="AspectFit" HorizontalOptions="Start" VerticalOptions="Start"/>
+                                            <Label Text = "{Binding DateAtualizacao, Converter={StaticResource dateTimeConverter}}" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" TextColor="Black" FontSize="10" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" />
+                                            <Label Text = "{Binding Address}" Margin="5" Grid.ColumnSpan="5" Padding="0,0,0,0" MaxLines="3"  Grid.Row="3" TextColor="Blue" TextDecorations="Underline" FontSize="11" HorizontalTextAlignment="Start" VerticalTextAlignment="Start">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer CommandParameter="{Binding LatLong}" Tapped="OnTappedTitulo"/>
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                            <StackLayout Orientation="Horizontal" Grid.ColumnSpan="5" Grid.Row="4">
+                                                <Frame  BackgroundColor="WhiteSmoke" 
+                                                        HorizontalOptions="End" 
+                                                        VerticalOptions="End"
+                                                        HasShadow="True"
+                                                        OutlineColor="White" 
+                                                        Padding="5,0,5,0">
+                                                    <Label Text="88 km/h" FontSize="12"></Label>
+                                                </Frame>
+                                            </StackLayout>
+                                        </Grid>
+                                        <!--<Label Text = "{Binding subtitulo}" Font="12" HorizontalTextAlignment="Start" MaxLines="3" />-->
+                                    </StackLayout>
                                 </StackLayout>
-                            </StackLayout>
+                            </Frame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
