@@ -33,7 +33,7 @@ namespace RadarFamilyCore.View
 
             if ((int)ItemTracking == 1)
             {
-                BindingContext = new TrackingPageViewModel((int)Application.Current.Properties["IdUser"]);
+                this.MontaUltimaPosicao();
                 this.Title = "Últimas Posições";
             }
             else
@@ -90,38 +90,38 @@ namespace RadarFamilyCore.View
 
                         lvPosition.ItemsSource = listPosition;
 
-                        //var polyline = new Polyline();
+                        var polyline = new Polyline();
 
-                        //foreach (DtoPosition x in lvPosition.DataSource.Items)
-                        //{
+                        foreach (DtoPosition x in lvPosition.ItemsSource)
+                        {
 
-                        //    polyline.Positions.Add(new Position(x.Latitude, x.Longitude));
+                            polyline.Positions.Add(new Position(x.Latitude, x.Longitude));
 
-                        //    polyline.StrokeColor = Color.Red;
-                        //    polyline.StrokeWidth = 5f;
-                        //    polyline.Tag = "POLYLINE"; // Can set any object
+                            polyline.StrokeColor = Color.Red;
+                            polyline.StrokeWidth = 5f;
+                            polyline.Tag = "POLYLINE"; // Can set any object
 
-                        //    polyline.IsClickable = false;
-                        //    polyline.Clicked += (s, e) =>
-                        //    {
-                        //        // handle click polyline
-                        //    };
+                            polyline.IsClickable = false;
+                            polyline.Clicked += (s, e) =>
+                            {
+                                // handle click polyline
+                            };
 
 
-                        //    Pin pin = new Pin()
-                        //    {
-                        //        Icon = BitmapDescriptorFactory.FromBundle(x.Avatar),
-                        //        Type = PinType.Place,
-                        //        Label = x.Name,
-                        //        Address = x.Address,
-                        //        Position = new Position(x.Latitude, x.Longitude),
-                        //        ZIndex = 5, 
-                        //    };
+                            Pin pin = new Pin()
+                            {
+                                Icon = BitmapDescriptorFactory.FromBundle(x.Avatar),
+                                Type = PinType.Place,
+                                Label = x.Name,
+                                Address = x.Address,
+                                Position = new Position(x.Latitude, x.Longitude),
+                                ZIndex = 5,
+                            };
 
-                        //    MyMap.Pins.Add(pin);
-                        //}
+                            MyMap.Pins.Add(pin);
+                        }
 
-                        //MyMap.Polylines.Add(polyline);
+                        MyMap.Polylines.Add(polyline);
                         Dictionary<Coordenates, Velocity> geo = new Dictionary<Coordenates, Velocity>();
 
                         Coordenates geoLoc = new Coordenates();

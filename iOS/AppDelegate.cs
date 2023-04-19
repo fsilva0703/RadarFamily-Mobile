@@ -34,7 +34,7 @@ namespace RadarFamilyCore.iOS
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
 			Forms.Init ();
-			Xamarin.FormsGoogleMaps.Init("AIzaSyDPxQFP4WSIpMLk_610YoYwxa09i9Xx89c");
+			Xamarin.FormsGoogleMaps.Init("AIzaSyCtM8Szk1kzKUMvi2bPlBmmkzKkuxF2YHs");
 
 			CachedImageRenderer.Init();
 

@@ -1,12 +1,11 @@
-﻿using Xamarin.Forms;
-using RadarFamilyCore.Messages;
-using System.Diagnostics;
-using System;
+﻿using RadarFamilyCore.Messages;
 using RadarFamilyCore.ViewModels.Dto;
+using System;
+using Xamarin.Forms;
 
 namespace RadarFamilyCore
 {
-	public partial class LongRunningPage : ContentPage
+    public partial class LongRunningPage : ContentPage
 	{
 		
 		public LongRunningPage (DtoResultLogin user)
